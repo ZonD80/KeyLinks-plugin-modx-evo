@@ -10,10 +10,15 @@ This plugin can be used for SEO. It replaces words in documents with links to we
 ### Installation
 
 Go to modx manager and start to create new plugin named "KeyLinks".
-Copy-paste code from plugin.php to Plugin code (PHP) textarea.
+
+Copy-paste code from plugin.txt to Plugin code (PHP) textarea.
+
 Go to Configuration tab and copy-paste text from config.txt into Configuration field.
+
 Go to System Events tab and check OnWebPagePrerender there.
-Upload files from Upload directory to your website. You can also upload contents of [QueryPath](https://github.com/technosophos/querypath) src folder to /assets/plugins/keylinks/qp
+
+Upload files from Upload directory to your website. You can also upload contents of [QueryPath](https://github.com/technosophos/querypath) "src" folder to /assets/plugins/keylinks/qp
+
 
 ### Usage
 

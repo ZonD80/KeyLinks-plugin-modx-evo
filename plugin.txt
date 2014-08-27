@@ -1,0 +1,49 @@
+$_KL_BASE = 'assets/plugins/keylinks/';
+
+$e = &$modx->Event;
+switch ($e->name) {
+	case "OnWebPagePrerender":
+	$exclude_docs = explode(',',$exclude_docs);
+	
+	$document_ids = $modx->getChildIds(0,9999);
+	
+	foreach ($document_ids as $doc_id) {
+		if (!in_array($doc_id,$exclude_docs)) {
+			$doc_data = $modx->getPageInfo($doc_id);
+			$TV_data = $modx->getTemplateVar($TV,"*",$doc_id);
+			if ($TV_data['value']) {
+				$replacements[$doc_id]['words'] = explode($separator,$TV_data['value']);
+				$replacements[$doc_id]['title'] = $doc_data['pagetitle'];
+				$replacements[$doc_id]['link'] = $modx->makeUrl($doc_id);
+			}
+			
+		}
+	}
+	
+	if ($replacements) {
+		
+		$o = &$modx->documentOutput; // get a reference of the output
+		
+		require(MODX_BASE_PATH. $_KL_BASE .'qp/qp.php');
+		
+		$document = @qp($o, '', array('ignore_parser_warnings' => TRUE));
+		$replaceable_data = $document->find("body ".$include_tags);
+		foreach ($replaceable_data as $element) {
+			foreach ($replacements as $did=>$replace_data) {
+				foreach ($replace_data['words'] as $word) {
+					$replacement = "<a href=\"{$replace_data['link']}\" title=\"{$replace_data['title']}\" class=\"$class\">$0</a>";
+					$element->html(preg_replace('/(?!title=".*?)('.$word.')(?!.*?")/'.($case_sensitive?'i':''),$replacement,$element->html()));
+				}
+			}
+		}
+		
+		
+		$o = $document->xhtml();
+		
+		
+	}
+	break;
+	default :
+	return;
+	break;
+}
