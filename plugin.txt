@@ -28,11 +28,13 @@ switch ($e->name) {
 		
 		$document = @qp($o, '', array('ignore_parser_warnings' => TRUE));
 		$replaceable_data = $document->find("body ".$include_tags);
+		$current_id = &$modx->documentIdentifier;
 		foreach ($replaceable_data as $element) {
 			foreach ($replacements as $did=>$replace_data) {
+				if ($link_itself=='No' && $did==$current_id) { continue; }
 				foreach ($replace_data['words'] as $word) {
 					$replacement = "<a href=\"{$replace_data['link']}\" title=\"{$replace_data['title']}\" class=\"$class\">$0</a>";
-					$element->html(preg_replace('/(?!title=".*?)('.$word.')(?!.*?")/'.($case_sensitive?'i':''),$replacement,$element->html()));
+					$element->html(preg_replace('/(?!title=".*?)('.$word.')(?!.*?")/'.($case_sensitive=='Yes'?'i':''),$replacement,$element->innerHTML()));
 				}
 			}
 		}
