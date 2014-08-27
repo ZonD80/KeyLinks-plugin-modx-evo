@@ -1,0 +1,1 @@
+&TV=TV name to look words for;string;KeyLinks &separator=Words separator in TV;string;, &class=Class to append to link;string;KeyLinks &include_tags=Comma-separated tag exceptions;string;p,span,strong,i &exclude_docs=Comma-separated IDs of documents to except;string; &case_sensitive=Case sensitive;list;No,Yes;Yes
